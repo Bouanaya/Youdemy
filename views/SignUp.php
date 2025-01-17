@@ -16,7 +16,7 @@
             <p class="mt-2 text-sm text-gray-600">Remplissez le formulaire ci-dessous</p>
         </div>
 
-        <form class="space-y-4" method="post" action="">
+        <form class="space-y-4" method="post" action="../Actions/signUp.php">
             <!-- Nom -->
             <div>
                 <label for="FullName" class="block text-sm font-medium text-gray-700">
