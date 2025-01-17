@@ -8,14 +8,16 @@
 </head>
 <body class="bg-white">
     <!-- Navigation -->
-    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center border-b-2 border-green-500">
         <div class="flex items-center">
-            <span class="text-green-500 text-xl font-bold">🎓 YoudemY</span>
+            <a href="">
+                <img src="./assets/images/Udemy_New.webp" alt="" class="h-14 object-cover">
+            </a>
         </div>
         <div class="hidden md:flex items-center space-x-8">
           
-            <a href="#" class="bg-green-400 text-white px-4 py-2 rounded-md">Sign In</a>
-            <a href="#" class="bg-green-500 text-white px-4 py-2 rounded-md">Sign Up</a>
+            <a href="./views/SignIn.php" class="bg-green-400 text-white px-4 py-2 rounded-md">Sign In</a>
+            <a href="./views/SignUp.php" class="bg-green-500 text-white px-4 py-2 rounded-md">Sign Up</a>
         </div>
     </nav>
 
@@ -38,39 +40,15 @@
         </div>
     </section>
 
-    <!-- Trusted Companies -->
-    <section class="container mx-auto px-6 py-16 text-center">
-        <h2 class="text-2xl font-bold text-gray-800 mb-8">Trusted by 100+ Leading companies</h2>
-        <div class="flex flex-wrap justify-center items-center gap-8">
-            <img src="./assets/svg/google-1-1-logo-svgrepo-com-CKRs7Y62.svg" alt="Google" class="h-40"/>
-            <img src="./assets/svg/slack-logo-svgrepo-com-CABMsxVD.svg" alt="Slack" class="h-48"/>
-            <img src="./assets/svg/microsoft-logo-svgrepo-com-BW1l55DS.svg" alt="Microsoft" class="h-40"/>
-            <img src="./assets/svg/spotify-1-logo-svgrepo-com-BMQu_51-.svg" alt="spotify" class="h-40"/>
-            <img src="./assets/svg/xbox-one-logo-svgrepo-com-DhH10UXx (1).svg" alt="xbox" class="h-40"/>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <section class="container mx-auto px-6 py-16">
-        <h2 class="text-2xl font-bold text-gray-800 text-center mb-16">More than just learning</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center">
-                <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                    <img src="./assets/svg/record-svgrepo-com.svg" alt="">
-                </div>
-                <h3 class="text-lg font-semibold text-green-500 mb-2">Training from expart</h3>
-                <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem temporibus hic accusantium possimus, reprehenderit voluptatibus?</p>
-                <a href="#" class="text-green-500 mt-4 inline-block">Learn More</a>
-            </div>
-            <!-- Additional feature cards with similar structure -->
-        </div>
-    </section>
-
-    <!-- Popular Courses -->
-    <section class="container mx-auto px-6 py-16 bg-green-50 rounded-3xl">
+  
+   
+    <section class="container mx-auto px-6 py-16 bg-green-100 rounded-3xl">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-2xl font-bold text-gray-800">Most Popular Courses</h2>
-            <a href="#" class="text-green-500">Explore more</a>
+            <div class="">
+            <input type="text" placeholder="Search..." class="outline-none py-2 rounded-lg px-2">
+            <a href="#" class="bg-green-400 text-white px-4 py-2 rounded-md">Search</a>
+            </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Course Card -->
@@ -120,48 +98,12 @@
             <div class="text-center">
                 <div class="rounded-t-full flex justify-center">
                     <img src="./assets/images/Screenshot_from_2024-05-07_17-54-25-removebg-preview.png" alt="Instructor" class="w-full  object-cover"/>
-                    <div class="absolute bottom-0 right-0 bg-white rounded-full p-2">
-                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                    </div>
+                  
                 </div>
                 <h3 class="font-semibold">Leslie Alexander</h3>
                 <p class="text-gray-600 text-sm">UI/UX Designer</p>
             </div>
             <!-- Additional instructor cards -->
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="container mx-auto px-6 py-16">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-bold text-gray-800">Testimoni from our students</h2>
-            <div class="flex space-x-2">
-                <button class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <button class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <!-- Testimonial cards here -->
-    </section>
-
-    <!-- Newsletter -->
-    <section class="container mx-auto px-6 py-16">
-        <div class="bg-green-50 rounded-2xl p-8">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Newsletter</h2>
-            <p class="text-center text-gray-600 mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="max-w-md mx-auto flex">
-                <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-2 rounded-l-md border-2 border-green-500 focus:outline-none"/>
-                <button class="bg-green-500 text-white px-6 py-2 rounded-r-md">Subscribe</button>
-            </div>
         </div>
     </section>
 

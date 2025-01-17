@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
 </head>
 
-<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8 space-y-6">
+<body class="bg-gradient-to-r from-indigo-500 via-green-500 to-green-600 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-green-100 rounded-lg shadow-lg w-full max-w-md p-8 space-y-6">
 
         <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900">Connexion</h2>
@@ -48,21 +49,7 @@
                         placeholder="••••••••"
                         required>
                 </div>
-                <div class="flex items-center justify-between mt-2">
-                    <div class="flex items-center">
-                        <input
-                            id="remember"
-                            name="remember"
-                            type="checkbox"
-                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                        <label for="remember" class="ml-2 block text-sm text-gray-700">
-                            Se souvenir de moi
-                        </label>
-                    </div>
-                    <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-500">
-                        Mot de passe oublié ?
-                    </a>
-                </div>
+               
             </div>
 
 
