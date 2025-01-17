@@ -11,7 +11,8 @@
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center border-b-2 border-green-500">
         <div class="flex items-center">
             <a href="">
-                <img src="./assets/images/Udemy_New.webp" alt="" class="h-14 object-cover">
+            <h3 class="text-xl font-bold mb-4">YOU🎓DEMY</h3>
+
             </a>
         </div>
         <div class="hidden md:flex items-center space-x-8">

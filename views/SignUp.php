@@ -62,6 +62,14 @@
                     Le mot de passe doit contenir au moins 8 caractères
                 </p>
             </div>
+            <div class="flex gap-4 items-center">
+                    <label for="role">I want to</label>
+                    <select class="border-gray-300  outline-none border rounded-lg py-2 px-3 bg-transparent" id="role" name="role" required >
+                        <option value="student">Student</option>
+
+                        <option value="teacher">Teacher</option>
+                    </select>
+                </div>
 
         
 
