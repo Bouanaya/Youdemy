@@ -1,6 +1,7 @@
 <?php
+require_once __DIR__ ."../../../vendor/autoload.php";
+use Src\Config\Database;
 
-require "../config/Database.php";
 class User {
 
     protected string $username;
@@ -75,7 +76,17 @@ class User {
         }
     }
     
+
+    public function logout(){
+        session_start();
+        session_unset();
+        session_destroy();
+        header("Location: ../../public/index.php");
+    }
         }
+
+
+
    
 
 ?>
