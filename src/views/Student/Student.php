@@ -1,3 +1,8 @@
+<?php  
+                session_start();
+               
+                ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +35,10 @@
     <section class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center">
         <div class="flex justify-center  w-full">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                welcome  to 
+                welcome  to <?php  
+             
+                echo $_SESSION['userName']
+                ?>
         
             </h1>
           

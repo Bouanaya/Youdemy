@@ -16,16 +16,16 @@
             <p class="mt-2 text-sm text-gray-600">Remplissez le formulaire ci-dessous</p>
         </div>
 
-        <form class="space-y-4" method="post" action="../Actions/signUp.php">
+        <form class="space-y-4" method="post" action="../../Controllers/signUp.php">
             <!-- Nom -->
             <div>
-                <label for="FullName" class="block text-sm font-medium text-gray-700">
-                    FullName
+                <label for="userName" class="block text-sm font-medium text-gray-700">
+                    userName
                 </label>
                 <input
                     type="text"
-                    id="FullName"
-                    name="FullName"
+                    id="userName"
+                    name="userName"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Entrez votre nom"
                     required>
@@ -76,6 +76,7 @@
             <!-- Bouton de soumission -->
             <button
                 type="submit"
+                name="register"
                 class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 S'inscrire
             </button>
