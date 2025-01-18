@@ -1,6 +1,8 @@
 <?php
+require_once("../Classes/User.php");
+
 session_start();
-require_once('../Classes/User.php');
+
 if (isset($_POST['submit'])) {
 
     $email = $_POST['email'];

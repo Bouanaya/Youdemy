@@ -1,6 +1,6 @@
 <?php
-
 require_once("Crud.php");
+
 class Tag
 {
     private $table = 'tags';
@@ -8,7 +8,7 @@ class Tag
     {
         if (isset($_POST['submit'])) {
             $name = $_POST['tags'];
-            Crud::insert($this->table, ['name' => $name]);
+        
             header('Location: ../../public/layout/tagAuthor.php');
            
           

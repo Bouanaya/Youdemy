@@ -1,6 +1,9 @@
 <?php
  
 session_start();
+if ( $_SESSION['role'] != 'admin') {
+    header('Location: http://localhost/Youdemy/src/views/Auth/signIn.php');
+}
 
 ?>
 

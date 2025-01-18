@@ -1,7 +1,4 @@
 <?php 
-namespace Src\Config;
-require_once __DIR__ ."../../../vendor/autoload.php";
-use PDO;
 class Database{
 private static $userHost='root';
 private static $serverHost='localhost';

@@ -1,5 +1,6 @@
 <?php
-require "../config/Database.php";
+
+require_once "../config/Database.php";
 class Crud
 {
 
@@ -8,7 +9,7 @@ class Crud
         // var_dump($data); 
         // echo $table;
 
-        $conn = Database::connect();  
+        $conn =  Database::connect();  
         $columns = implode(", ", array_keys($data));
         echo $columns;
         $placeholders = ":" . implode(", :", array_keys($data));
@@ -57,7 +58,5 @@ class Crud
     }
 
 }
-
-
 
 
