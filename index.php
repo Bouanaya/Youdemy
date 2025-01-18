@@ -18,8 +18,8 @@
         </div>
         <div class="hidden md:flex items-center space-x-8">
           
-            <a href="./views/SignIn.php" class="bg-green-400 text-white px-4 py-2 rounded-md">Sign In</a>
-            <a href="./views/SignUp.php" class="bg-green-500 text-white px-4 py-2 rounded-md">Sign Up</a>
+            <a href="./src/views/Auth/SignIn.php" class="bg-green-400 text-white px-4 py-2 rounded-md">Sign In</a>
+            <a href="./src/views/Auth/SignUp.php" class="bg-green-500 text-white px-4 py-2 rounded-md">Sign Up</a>
         </div>
     </nav>
 
