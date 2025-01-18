@@ -40,8 +40,9 @@ class User {
         $stmt=$pdo->prepare("SELECT * FROM users where email=?");
         $stmt->execute([$email]);
         $user =$stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($user);
+  
         if ($user && password_verify($password, $user['password']) ){
+         
            $_SESSION['userId']=$user['userId'];
            $_SESSION['userName']=$user['username'];
            $_SESSION['email']=$user['email'];
@@ -51,7 +52,7 @@ class User {
             var_dump($_SESSION['role']);
                header("Location: http://localhost/Youdemy/src/views/Student/Student.php");
             }
-            else if ($_SESSION['role']=="enseignant"){
+            else if ($_SESSION['role']=="teacher"){
                 header("Location: http://localhost/Youdemy/src/views/enseignant/enseignant.php");
 
             }
@@ -61,15 +62,20 @@ class User {
             }
             
         }
-        else {
-            var_dump($user['userId']);
+ 
+
+           
+ 
+     else {
+       
+    header("Location: http://localhost/Youdemy/src/views/Auth/signIn.php");
+    echo "<script>
+    document.getElementById('form').reset()
+</script>";
         }
     }
+    
+        }
+   
 
-
-
-
-}
-
-
-     
+?>

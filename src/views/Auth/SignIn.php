@@ -1,3 +1,7 @@
+ 
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -20,7 +24,7 @@
         </div>
 
 
-        <form class="space-y-6" method="post" action="../../Controllers/signUp.php">
+        <form class="space-y-6" id="form" method="post" action="../../Controllers/sign.php">
 
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700">
@@ -97,5 +101,6 @@
     </div>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>

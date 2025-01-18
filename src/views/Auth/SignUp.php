@@ -16,7 +16,7 @@
             <p class="mt-2 text-sm text-gray-600">Remplissez le formulaire ci-dessous</p>
         </div>
 
-        <form class="space-y-4" method="post" action="../../Controllers/signUp.php">
+        <form class="space-y-4" id="form" method="post" action="../../Controllers/sign.php">
             <!-- Nom -->
             <div>
                 <label for="userName" class="block text-sm font-medium text-gray-700">
@@ -66,7 +66,6 @@
                     <label for="role">I want to</label>
                     <select class="border-gray-300  outline-none border rounded-lg py-2 px-3 bg-transparent" id="role" name="role" required >
                         <option value="student">Student</option>
-
                         <option value="teacher">Teacher</option>
                     </select>
                 </div>
@@ -82,7 +81,7 @@
             </button>
         </form>
 
-        <!-- Lien de connexion -->
+        
         <div class="text-center text-sm">
             <p class="text-gray-600">
                 Déjà un compte?
@@ -93,5 +92,78 @@
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+ 
+document.getElementById('form').addEventListener('submit', function (event) {
+    event.preventDefault();  
+
+    const username = document.getElementById('userName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+
+    if (!validateUsername(username)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Username',
+            text: 'Username must be at least 3 characters long and contain only letters, numbers, or underscores.',
+        });
+        return;
+    }
+
+ 
+    if (!validateEmail(email)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email address.',
+        });
+        return;
+    }
+
+  
+    if (!validatePassword(password)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Weak Password',
+            text: 'Password must be at least 8 characters long and include a mix of letters and numbers.',
+        });
+        return;
+    }
+
+ 
+    Swal.fire({
+        icon: 'success',
+        title: 'Form Submitted!',
+        text: 'Your form has been submitted successfully.',
+    }).then(() => {
+      
+        document.getElementById('form').submit();
+    
+    });
+});
+
+ 
+function validateUsername(username) {
+ 
+    const usernamePattern = /^[a-zA-Z\s]+$/;
+    return usernamePattern.test(username);
+}
+
+ 
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailPattern.test(email);
+}
+
+ 
+function validatePassword(password) {
+
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return passwordPattern.test(password);
+}
+
+</script>
 
 </html>
