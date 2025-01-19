@@ -2,7 +2,7 @@
     "name": "soufiane/youdemy",
     "autoload": {
         "psr-4": {
-            "src": "src/"
+            "src\\": "src/"
         }
     },
     "require": {}

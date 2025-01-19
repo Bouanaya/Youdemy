@@ -1,6 +1,8 @@
 <?php
-
-require_once "../config/Database.php";
+namespace src\Classes;
+require_once __DIR__ . '/../../vendor/autoload.php';
+use src\config\Database;
+use PDO;
 class Crud
 {
 
@@ -25,7 +27,6 @@ class Crud
         if ($conditions) {
             $query .= " WHERE $conditions";
         }
-
         $stmt = $conn->prepare($query);
         $stmt->execute($params);
 

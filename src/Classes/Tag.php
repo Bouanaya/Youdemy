@@ -1,5 +1,8 @@
 <?php
-require_once("Crud.php");
+namespace src\Classes;
+require_once __DIR__ . '/../../vendor/autoload.php';
+ use src\Classes\Crud;
+ 
 
 class Tag
 {
@@ -8,8 +11,9 @@ class Tag
     {
         if (isset($_POST['submit'])) {
             $name = $_POST['tags'];
+            Crud::insert($this->table, ['tagName' => $name]);
         
-            header('Location: ../../public/layout/tagAuthor.php');
+            header('Location: http://localhost/Youdemy/src/views/Admin/pages/tag.php');
            
           
         }
@@ -27,7 +31,7 @@ class Tag
 
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $tags = Crud::select($this->table, '*', 'id=:id', ['id' => $id]);
+            $tags = Crud::select($this->table, '*', 'tagId=:tagId', ['tagId' => $id]);
             return $tags;
         };
 
@@ -36,8 +40,8 @@ class Tag
             $name = $_POST['tags'];
             echo "update";
             echo $id;
-            Crud::update($this->table, ['name' => $name], 'id=:id', ['id' => $id]);
-            header('Location: ../../public/layout/tagAuthor.php');
+            Crud::update($this->table, ['tagName' => $name], 'tagId=:tagId', ['tagId' => $id]);
+            header('Location: http://localhost/Youdemy/src/views/Admin/pages/tag.php');
         }
       
     }
@@ -47,8 +51,9 @@ class Tag
         echo $_SERVER['REQUEST_METHOD'];
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            Crud::delete($this->table, 'id=:id', ['id' => $id]);
-            header('Location: ../../public/layout/tagAuthor.php');
+            Crud::delete($this->table, 'tagId=:tagId', ['tagId' => $id]);
+            header('Location: http://localhost/Youdemy/src/views/Admin/pages/tag.php');
+
         }
     }
 

@@ -1,4 +1,7 @@
 <?php 
+namespace src\config;
+require_once __DIR__ . '/../../vendor/autoload.php';
+use PDO;
 class Database{
 private static $userHost='root';
 private static $serverHost='localhost';
@@ -23,5 +26,5 @@ if(self::$conn) {
 
 
  
-var_dump( Database::connect() );
+ 
 ?>

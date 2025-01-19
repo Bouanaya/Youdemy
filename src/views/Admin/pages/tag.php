@@ -1,10 +1,15 @@
 <?php
-require "../../../Classes/Tag.php";
+require_once '../../../../vendor/autoload.php';
+use src\Classes\Tag;
 $tag = new Tag();
-$tags = $tag->gettags();
+$tags = $tag->gettags(); 
+
+session_start();
+if ( $_SESSION['role'] != 'admin') {
+    header('Location: http://localhost/Youdemy/src/views/Auth/signIn.php');
+}
 ?>
-
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,10 +37,9 @@ $tags = $tag->gettags();
         <!-- Sidebar -->
         <aside class="bg-gray-900  min-h-screen p-4">
             <ul class="space-y-2 mt-4">
-            <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../../public/pages/Author.php" class="text-white">Dashboard</a></li>
-                <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../Layout/articleAuthor.php" class="text-white">Articles</a></li>
-                <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../Layout/tagAuthor.php" class="text-sky-400">tags</a></li>
-                <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../Layout/categoryAdmin.php" class="text-white">Category</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="#" class="text-white">Dashboard</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./pages/tag.php" class=" text-sky-400">tags</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../Layout/categoryAdmin.php" class="text-white">Category</a></li>
 
             </ul>
         </aside>
@@ -64,7 +68,7 @@ $tags = $tag->gettags();
 
 
     <div class="overflow-x-auto">
-        <table class=" bg-white">
+        <table class=" w-1/2 bg-white"> 
             <thead>
                 <tr class=" border-b-4 bg-[#B1F0F7]">
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">ID</th>
@@ -76,11 +80,11 @@ $tags = $tag->gettags();
             <tbody>
                 <?php foreach ($tags as $tag) : ?>
                     <tr>
-                        <td class="py-2 px-4 border-b border-gray-300"><?= $tag['id'] ?></td>
-                        <td class="py-2 px-4 border-b border-gray-300"><?= $tag['name'] ?></td>
+                        <td class="py-2 px-4 border-b border-gray-300"><?= $tag['tagId'] ?></td>
+                        <td class="py-2 px-4 border-b border-gray-300"><?= $tag['tagName'] ?></td>
                         <td class="py-2 px-4 border-b border-gray-300 flex space-x-4">
-                            <a href="../forms/updateTag.php?action=update&id=<?= $tag['id'] ?>" class="bg-blue-400 text-white py-1 px-2 rounded hover:bg-blue-600">Edit</a>
-                            <a href="../../src/Controller/tagController.php?action=delete&id=<?= $tag['id'] ?>" class="bg-red-400 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
+                            <a href="../forms/updateTag.php?action=update&id=<?= $tag['tagId'] ?>" class="bg-blue-400 text-white py-1 px-2 rounded hover:bg-blue-600">Edit</a>
+                            <a href="../../../Controllers/Tag.php?action=delete&id=<?= $tag['tagId'] ?>" class="bg-red-400 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -1,6 +1,6 @@
 <?php
-require_once("../Classes/User.php");
-
+require_once "../../vendor/autoload.php";
+use src\Classes\User;
 session_start();
 
 if (isset($_POST['submit'])) {

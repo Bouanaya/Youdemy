@@ -1,5 +1,10 @@
 <?php
-require("../config/Database.php");
+namespace src\Classes;
+require "../../vendor/autoload.php";
+use src\config\Database;
+use PDO;
+
+
 
 class User {
 
