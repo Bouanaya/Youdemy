@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } 
     else if(isset($_POST['update'])){ {
        $tags->updatetags();
+      echo $_POST['id'];
     echo "<script>alert('Tag updated successfully')</script>";
     
     }}  

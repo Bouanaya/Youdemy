@@ -43,7 +43,7 @@ class Tag
         if (isset($_POST['update'])) {
             $id = $_POST['id'];
             $name = $_POST['tags'];
-            echo "update";
+            echo $name;
             echo $id;
             Crud::update($this->table, ['tagName' => $name], 'tagId=:tagId', ['tagId' => $id]);
             header('Location: http://localhost/Youdemy/src/views/Admin/pages/tag.php');
