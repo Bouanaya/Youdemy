@@ -13,7 +13,6 @@ class Crud
 
         $conn =  Database::connect();  
         $columns = implode(", ", array_keys($data));
-        echo $columns;
         $placeholders = ":" . implode(", :", array_keys($data));
         $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
         $stmt =$conn->prepare($query);

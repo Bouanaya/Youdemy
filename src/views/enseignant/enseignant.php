@@ -13,26 +13,31 @@
 </head>
 <body class="bg-white">
 
-    <nav class="container mx-auto px-6 py-4 flex justify-between items-center border-b-2 border-green-500">
-        <div class="flex items-center">
-            <a href="">
-            <h3 class="text-xl font-bold mb-4">YOU🎓DEMY</h3>
-            </a>
+        <!-- Navigation -->
+        <nav class="fixed bg-transparent w-screen bg-white border-b-2 border-green-400 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="" class="text-2xl text-green-500">🎓 E-Learning</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="./src/views/Auth/SignIn.php" class="bg-green-200 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign In</a>
+                <a href="./src/views/Auth/SignUp.php" class="bg-green-500 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign Up</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-green-500 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div class="flex">
-            <ul class="flex gap-6 font-bold">
-
-                <li><a href="./Student.php" class="text-green-500" >Home</a></li>
-                <li><a href="./StudentCours.php">Cours</a></li>
-            </ul>
-        </div>
-        <div class="hidden md:flex items-center space-x-8">
-            <a href="./views/SignIn.php" class="bg-red-500 text-white px-4 py-2 rounded-md">login out</a>
-          
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="./src/views/Auth/SignIn.php" class="block bg-green-200 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign In</a>
+            <a href="./src/views/Auth/SignUp.php" class="block bg-green-500 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign Up</a>
         </div>
     </nav>
 
-    <section class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center">
+    <section class="container mx-auto px-6 pt-32 pb-16 flex flex-col md:flex-row items-center">
         <div class="flex justify-center  w-full">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">
                 Welcome    <?php  
@@ -87,36 +92,60 @@
     </section>
    
 
-    <footer class="bg-gray-900 text-white py-16">
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-white py-16">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">🎓 E-Learning</h3>
-                    <p class="text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    <div class="flex space-x-4 mt-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
-                            </svg>
-                        </a>
-                 
+    
+        
+            <div class=" border-b border-gray-400 py-6">
+                <div class="md:grid grid-cols-4 gap-8 text-white">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-2">
+                            <h1 class="text-3xl">🎓 E-Learning</h1>
+                        </div>
+                        <p class="text-sm">Empowering your learning journey with top-notch courses.</p>
+                        <div class="flex space-x-5">
+                            <a href="#"><i class="pi pi-facebook hover:text-[#4ADE80] duration-500" style="font-size: 2rem"></i></a>
+                            <a href="#"><i class="pi pi-twitter hover:text-[#4ADE80] duration-500" style="font-size: 2rem"></i></a>
+                            <a href="#"><i class="pi pi-instagram hover:text-[#4ADE80] duration-500" style="font-size: 2rem"></i></a>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mt-6">
+                        <h1 class="text-xl text-[#4ADE80]">Company</h1>
+                        <div class="flex flex-col gap-2 text-sm">
+                            <a href="#">About</a>
+                            <a href="#">Careers</a>
+                            <a href="#">Mobile</a>
+                            <a href="#">Blog</a>
+                            <a href="#">How we work</a>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mt-6">
+                        <h1 class="text-xl text-[#4ADE80]">Contact</h1>
+                        <div class="flex flex-col gap-2 text-sm">
+                            <a href="#">Help/FAQ</a>
+                            <a href="#">Press</a>
+                            <a href="#">Affiliates</a>
+                            <a href="#">Hotel owners</a>
+                            <a href="#">Partners</a>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mt-6">
+                        <h1 class="text-xl text-[#4ADE80]">More</h1>
+                        <div class="flex flex-col gap-2 text-sm">
+                            <a href="#">Airline fees</a>
+                            <a href="#">Airlines</a>
+                            <a href="#">Low fare tips</a>
+                            <a href="#">Badges & Certificates</a>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Company</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Press</a></li>
-                    </ul>
-                </div>
-            
             </div>
-            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400">© 2025 Learning. All rights reserved</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white">Privacy policy</a>
-                    <a href="#" class="text-gray-400 hover:text-white">Terms & conditions</a>
+            <div class="md:px-8 px-4 flex justify-between items-center py-4 text-white">
+                <h1 class="text-sm">&copy; 2025 E-Learning. All rights reserved</h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#">Privacy policy</a>
+                    <a href="#" class="border-l pl-4">Terms & conditions</a>
                 </div>
             </div>
         </div>

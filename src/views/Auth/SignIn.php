@@ -13,8 +13,10 @@
 
 </head>
 
-<body class="bg-gradient-to-r from-indigo-500 via-green-500 to-green-600 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-green-100 rounded-lg shadow-lg w-full max-w-md p-8 space-y-6">
+<body class="bg-white min-h-screen flex items-center justify-center p-4">
+<div class="bg-green-300 w-1/2 h-full absolute left-0"></div>
+    <div class="bg-green-200 rounded-lg shadow-lg w-full max-w-md p-8 space-y-6 rellative z-10">
+        
 
         <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900">Connexion</h2>
@@ -52,6 +54,9 @@
                         class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="••••••••"
                         required>
+                        <span id="passwordError" class="text-red-500 text-sm hidden">
+                        Le mot de passe incorrect.
+                        </span>
                 </div>
                
             </div>
@@ -68,7 +73,7 @@
 
         <div class="relative">
             <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-gray-300"></div>
+                <div class="w-full border-t border-gray-300 "></div>
             </div>
             <div class="relative flex justify-center text-sm">
                 <span class="px-2 bg-white text-gray-500">
@@ -102,5 +107,16 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>if (false) {
+    document.getElementById('passwordError').style.display = 'block';
+        document.getElementById('passwordError').style.color = 'red';
+        document.getElementById('password').style.borderColor = 'red';  
+        return;
+    }
+    else{
+        document.getElementById('passwordError').style.color = 'green';
+        document.getElementById('password').style.borderColor = 'green';
+    }
+</script>
 
 </html>

@@ -17,38 +17,35 @@ if ( $_SESSION['role'] != 'admin') {
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Articles Dashboard</title>
 </head>
-<body class="bg-gray-100">
-    <!-- Header Section -->
-    <header class="bg-gray-800 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <div class="text-2xl font-bold">
-                <a href="#" class="text-white">Dashboard Author</a>
-            </div>
-            <!-- Sign Out -->
-            <div class="flex space-x-4">
-                <!-- <a href="../index.php" class="hover:text-yellow-400">Sign Out</a> -->
-            </div>
-        </div>
-    </header>
+<body class="bg-green-100">
     <!-- Main Section -->
     <main class="flex">
         <!-- Sidebar -->
-        <aside class="bg-gray-900 w-64 min-h-screen p-4">
+        <aside class="bg-gray-900 w-64 min-h-screen p-4 flex flex-col justify-between fixed">
             <ul class="space-y-2 mt-4">
              
-                <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="#" class="text-sky-400">Dashboard</a></li>
-               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./pages/tag.php" class="text-white">tags</a></li>
-               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../Layout/categoryAdmin.php" class="text-white">Category</a></li>
+             <li class="px-4 py-2 bg-gray-800 rounded"><a href="#" class="text-green-300">Dashboard</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./pages/tag.php" class="text-white">Tags</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./pages/category.php" class="text-white">Category</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./pages/users.php" class="text-white">Users</a></li>
 
          
                     
              
                 
             </ul>
+        <div class="flex bg-red-500 items-center rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+</svg>
+
+
+        <a href="../Auth/signOut.php" class="px-4 py-2  text-white ">Déconnexion</a>
+
+        </div>
         </aside>
         <!-- Content -->
-    <div class="block w-3/4">
+    <div class="block w-full pl-64">
         <section class="flex-1 p-6">
             <h1 class="text-3xl font-bold text-gray-900 mb-4">Dashboard  </h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -110,7 +107,7 @@ if ( $_SESSION['role'] != 'admin') {
 </section>
 <div class="flex ">
 <section class="w-full p-6">
-    <h1 class="text-3xl font-bold text-gray-900 mb-4">Articles Table</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Categorys Table</h1>
     <div class="overflow-x-auto">
         <table class="w-full  bg-white">
             <thead>
@@ -162,6 +159,7 @@ if ( $_SESSION['role'] != 'admin') {
         </table>
     </div>
 </section>
+
 
 </div>
 </div>

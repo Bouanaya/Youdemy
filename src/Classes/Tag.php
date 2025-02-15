@@ -11,9 +11,14 @@ class Tag
     {
         if (isset($_POST['submit'])) {
             $name = $_POST['tags'];
-            Crud::insert($this->table, ['tagName' => $name]);
-        
-            header('Location: http://localhost/Youdemy/src/views/Admin/pages/tag.php');
+            // var_dump($name);
+            foreach ($name as  $value) {
+           Crud::insert($this->table, ['tagName' => $value]);
+           header('Location: http://localhost/Youdemy/src/views/Admin/pages/tag.php');
+
+            }
+            
+           
            
           
         }

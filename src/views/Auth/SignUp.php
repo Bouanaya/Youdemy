@@ -9,8 +9,9 @@
 
 </head>
 
-<body class="bg-gradient-to-r from-indigo-500 via-green-500 to-green-600 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-green-100 rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
+<body class="bg-white min-h-screen flex items-center justify-center p-4">
+<div class="bg-green-300 w-1/2 h-full absolute right-0"></div>
+    <div class="bg-green-200 rounded-lg shadow-lg w-full max-w-md p-8 space-y-6 rellative z-10">
         <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900">Créer un compte</h2>
             <p class="mt-2 text-sm text-gray-600">Remplissez le formulaire ci-dessous</p>
@@ -26,9 +27,10 @@
                     type="text"
                     id="userName"
                     name="userName"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-300"
                     placeholder="Entrez votre nom"
                     required>
+                    <span id="usernameError" class="text-red-500 text-sm hidden"></span>
             </div>
 
             <!-- Email -->
@@ -40,9 +42,12 @@
                     type="email"
                     id="email"
                     name="email"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-300"
                     placeholder="bouanaya@exemple.com"
-                    required>
+                  >
+                    <span id="emailError" class="text-red-500 text-sm hidden">
+                        
+                    </span>
             </div>
 
             <!-- Mot de passe -->
@@ -54,21 +59,27 @@
                     type="password"
                     id="password"
                     name="password"
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-300"
                     placeholder="••••••••"
                     required
                     minlength="8">
-                <p class="mt-1 text-xs text-gray-500">
+                <p class="mt-1 text-xs text-gray-500 " id="passwordError">
                     Le mot de passe doit contenir au moins 8 caractères
                 </p>
             </div>
-            <div class="flex gap-4 items-center">
-                    <label for="role">I want to</label>
-                    <select class="border-gray-300  outline-none border rounded-lg py-2 px-3 bg-transparent" id="role" name="role" required >
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                    </select>
-                </div>
+            <div>
+                <label for="role" class="block text-sm font-medium text-gray-700">
+                    Je veux être
+                </label>
+                <select
+                    id="role"
+                    name="role"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-slate-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-300"
+                    required>
+                    <option value="student">Étudiant</option>
+                    <option value="teacher">Enseignant</option>
+                </select>
+            </div>
 
         
 
@@ -101,35 +112,41 @@ document.getElementById('form').addEventListener('submit', function (event) {
     const username = document.getElementById('userName').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
+    
 
 
     if (!validateUsername(username)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid Username',
-            text: 'Username must be at least 3 characters long and contain only letters, numbers, or underscores.',
-        });
+        document.getElementById('usernameError').classList.remove('hidden');
+        document.getElementById('usernameError').innerText = 'Username must be at least 3 characters ';
+        document.getElementById('userName').style.borderColor = 'red';
         return;
+    }
+    else{
+        document.getElementById('usernameError').classList.add('hidden');
+        document.getElementById('userName').style.borderColor = 'green';
     }
 
  
     if (!validateEmail(email)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid Email',
-            text: 'Please enter a valid email address.',
-        });
+        document.getElementById('emailError').classList.remove('hidden');
+        document.getElementById('emailError').innerText = 'Invalid email address format';
+        document.getElementById('email').style.borderColor = 'red';
         return;
+    }
+    else{
+        document.getElementById('emailError').classList.add('hidden');
+        document.getElementById('email').style.borderColor = 'green';
     }
 
   
     if (!validatePassword(password)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Weak Password',
-            text: 'Password must be at least 8 characters long and include a mix of letters and numbers.',
-        });
+        document.getElementById('passwordError').style.color = 'red';
+        document.getElementById('password').style.borderColor = 'red';  
         return;
+    }
+    else{
+        document.getElementById('passwordError').style.color = 'green';
+        document.getElementById('password').style.borderColor = 'green';
     }
 
  

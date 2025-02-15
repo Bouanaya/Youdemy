@@ -2,6 +2,9 @@
 
 require '../../vendor/autoload.php';
 use src\Classes\Tag;
+
+// $tags = $_POST['tags'] ;
+// var_dump($tags) ;
 $tags = new Tag();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
