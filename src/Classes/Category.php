@@ -12,6 +12,7 @@ class Category
         if (isset($_POST['submit'])) {
             $name = $_POST['category'];
             $description = $_POST['description'];
+            var_dump($name);
             Crud::insert($this->table, ['categoryName' => $name , 'description'=> $description]);
         
             header('Location: http://localhost/Youdemy/src/views/Admin/pages/category.php');
@@ -34,9 +35,12 @@ class Category
         };
 
         if (isset($_POST['update'])) {
-            $id = $_POST['categoryId'];
+            $id = $_POST['id'];
             $name = $_POST['category'];
             $description = $_POST['description'];
+            echo $name;
+            echo $id;
+            echo $description;
             Crud::update($this->table, ['categoryName' => $name ,'description'=>$description ], 'categoryId=:categoryId', ['categoryId' => $id]);
             header('Location: http://localhost/Youdemy/src/views/Admin/pages/category.php');
         }

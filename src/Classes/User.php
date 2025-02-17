@@ -14,7 +14,7 @@ class User {
     protected string $role;
 
 
-    public function register($userName,$email,$password,$role){
+    public function register($userName,$email,$password,$role,$slug){
    
 
 
@@ -31,8 +31,8 @@ return ;
 
         }
         else {
-        $stmt=$pdo->prepare("INSERT INTO users(username,email,password,role) VALUES (?,?,?,?)");
-        $stmt->execute([$userName,$email,$hashPassword,$role]);
+        $stmt=$pdo->prepare("INSERT INTO users(username,email,password,role,slug) VALUES (?,?,?,?,?)");
+        $stmt->execute([$userName,$email,$hashPassword,$role,$slug]);
         }
 
 

@@ -99,3 +99,21 @@ alter table courses add courseStatus ENUM('active','desactive') DEFAULT 'active'
 INSERT INTO `users`( `username`, `email`, `password`, `role`) VALUES ('SOUFIANE','bouanaya@gmail.com','12345678','student' );
 INSERT INTO `users`( `username`, `email`, `password`, `role`) VALUES ('SOUIAL','SOUHIALE@gmail.com','12345678','teacher' );
 INSERT INTO `users`( `username`, `email`, `password`, `role`) VALUES ('NOUHIALA','NOUHIALA@gmail.com','12345678','student' );
+
+
+
+
+
+INSERT INTO users (username, email, password, role, status, created_at) VALUES
+-- 5 Users on 2025-01-10
+('user1', 'userS14DZD@example.com', 'password123', 'student', 'active', '2025-04-10 08:00:00'),
+('user2', 'userD2E4D@example.com', 'password123', 'teacher', 'pending', '2025-04-10 09:15:00'),
+('user3', 'user3ZS4D@example.com', 'password123', 'student', 'suspended', '2025-04-10 10:30:00'),
+('user4', 'userE4Z4D@example.com', 'password123', 'teacher', 'active', '2025-02-10 11:45:00'),
+('user5', 'userZE5D4@example.com', 'password123', 'student', 'pending', '2025-05-10 13:00:00'),
+('user6', 'userE6ED4@example.com', 'password123', 'teacher', 'suspended', '2025-05-20 08:45:00'),
+('user7', 'useZr7RD4@example.com', 'password123', 'student', 'active', '2025-07-20 10:00:00'),
+('user8', 'useSr8RD4@example.com', 'password123', 'teacher', 'pending', '2025-07-20 11:15:00')
+;
+
+ALTER TABLE users ADD COLUMN slug VARCHAR(255) UNIQUE;

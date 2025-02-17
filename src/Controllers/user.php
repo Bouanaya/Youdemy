@@ -2,6 +2,7 @@
 require_once __DIR__ ."../../../vendor/autoload.php";
 use src\Classes\Admin;
 $admin = new Admin();
+
 if ($_SERVER["REQUEST_METHOD"] = "GET"){
     if($_GET["action"]== "active"){
         $status = "active";

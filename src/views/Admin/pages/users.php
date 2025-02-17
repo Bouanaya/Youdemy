@@ -2,15 +2,24 @@
 require_once '../../../../vendor/autoload.php';
 use src\Classes\Tag;
 use src\Classes\Crud;
+use src\config\Database;
 $tag = new Tag();
 $tags = $tag->gettags(); 
 $coutUsers = Crud::select("users" , "count(*)");
 $users = Crud::select("users","*", "role = 'teacher' or role ='student' ");
 $teacher = Crud::select("users","*", "role = 'teacher' ");
-
+$Database = new Database;
 session_start();
 if ( $_SESSION['role'] != 'admin') {
     header('Location: http://localhost/Youdemy/src/views/Auth/signIn.php');
+}
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+if ($search) {
+    // Prepare SQL query to search for a character in username, email, or any column
+
+    $result = Crud::select("users","*", " username LIKE '$search' OR email LIKE '$search'");
+
 }
 ?>
  
@@ -29,22 +38,44 @@ if ( $_SESSION['role'] != 'admin') {
         <!-- Sidebar -->
        <!-- Sidebar -->
        <aside class="bg-gray-900 w-64 min-h-screen p-4 flex flex-col justify-between fixed">
-            <ul class="space-y-2 mt-4">
+       <ul class="space-y-2 mt-4">
              
-             <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="../../Admin/dashbord.php" class="text-white">Dashboard</a></li>
-               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./tag.php" class="text-white">Tags</a></li>
-               <li class="px-4 py-2 hover:bg-gray-800 rounded"><a href="./category.php" class=" text-white ">Category</a></li>
-               <li class="px-4 py-2 bg-gray-800 rounded"><a href="" class=" text-green-300">Users</a></li>
+             <li class="px-4 py-2 hover:bg-gray-800 rounded flex gap-2 "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white ">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+</svg><a href="../../Admin/dashbord.php" class="text-white ">
+Dashboard</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+</svg>
+<a href="./tag.php" class="text-white">Tags</a></li>
+               <li class="px-4 py-2 hover:bg-gray-800 rounded flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+</svg>
+<a href="./Category.php" class=" text-white">Category</a></li>
+               <li class="px-4 py-2 bg-gray-800 rounded flex gap-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-green-300">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+</svg>
+<a href="" class="text-green-300">Users</a></li>
 
          
                     
              
                 
             </ul>
-        <div class="flex bg-red-500 items-center rounded">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+             
+
+              
+
+         
+                    
+             
+       
+        <div class="flex bg-red-700 items-center rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.49 12 3.74 8.248m0 0 3.75-3.75m-3.75 3.75h16.5V19.5" />
 </svg>
+
 
 
 <a href="../../Auth/signOut.php" class="px-4 py-2  text-white ">Déconnexion</a>
@@ -58,7 +89,7 @@ if ( $_SESSION['role'] != 'admin') {
     <div class="block w-full pl-64">
         <section class="flex-1 p-6">
             <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">Users</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Users</h1>
      
             </div>
            
@@ -81,9 +112,16 @@ if ( $_SESSION['role'] != 'admin') {
             
         </section>
 <section class="flex-1 p-6">
+    <div class="flex justify-between items-center">
     <h1 class="text-3xl font-bold text-gray-900 mb-4">Users Table</h1>
 
-
+    <div class="flex items-center gap-2">
+        <form action="">
+                <input type="text" placeholder="Search..." name="search" class="outline-none py-2 rounded-lg px-2">
+                <input type="submit" class="bg-green-400 text-white px-4 py-2 rounded-md cursor-pointer" value="Search">
+                </form>
+            </div>
+            </div>
     <div class="overflow-x-auto">
     <table class="min-w-full bg-white">
             <thead>
@@ -97,7 +135,7 @@ if ( $_SESSION['role'] != 'admin') {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user) :?>
+                <?php foreach ($result ?? $users as $user) :?>
                 
                 <tr>
                     <td class="py-2 px-4 border-b border-gray-300"> <?=$user['userId']?> </td>
@@ -135,61 +173,7 @@ if ( $_SESSION['role'] != 'admin') {
         </table>
     </div>
 </section>
-<section class="flex-1 p-6">
-    <h1 class="text-3xl font-bold text-gray-900 mb-4">teacher Table</h1>
 
-
-    <div class="overflow-x-auto">
-    <table class="min-w-full bg-white">
-            <thead>
-                <tr class="bg-[#FAFFC5]">
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">ID</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">username</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">email</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">role</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Status</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($teacher as $user) :?>
-                
-                <tr>
-                    <td class="py-2 px-4 border-b border-gray-300"> <?=$user['userId']?> </td>
-                    <td class="py-2 px-4 border-b border-gray-300"><?=$user['username']?></td>
-                    <td class="py-2 px-4 border-b border-gray-300"><?=$user['email']?></td>
-                    <td class="py-2 px-4 border-b border-gray-300"> <?=$user['role']?></td>
-            
-                    <td class="py-2 px-4 border-b
-                            <?php
-                    if ($user['status'] == "pending") {
-                       echo "text-orange-400";
-                    }
-                    if ($user['status'] == "suspended") {
-                        echo "text-red-400";
-                     }
-                     if ($user['status'] == "active") {
-                        echo "text-green-400";
-                     }
-
-
-                    
-                    ?>
-                    
-                     border-gray-300"><?=$user['status']?></td>
-                    <td class="py-2 px-4 border-b border-gray-300 flex space-x-4">
-                        <a href="../../../Controllers/user.php?action=active&id=<?=$user['userId'] ?> " class="bg-green-400 text-white py-1 px-2 rounded hover:bg-green-600">active</a>
-                            <a href="../../../Controllers/user.php?action=suspended&id=<?=$user['userId'] ?>" class="bg-red-400 text-white py-1 px-2 rounded hover:bg-red-600">suspended</a>
-                            <a href="../../../Controllers/user.php?action=pending&id=<?=$user['userId'] ?>" class="bg-orange-400 text-white py-1 px-2 rounded hover:bg-orange-600">pending</a>
-                        </td>
-                        
-                </tr>
-                <?php endforeach; ?>
-
-            </tbody>
-        </table>
-    </div>
-</section>
 </div>
 
 </main>

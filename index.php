@@ -57,12 +57,12 @@
     <section class="py-12 text-center">
         <h2 class="text-5xl mb-8">Trusted by 100+ Leading Companies</h2>
         <div class="flex  justify-center space-x-12">
-            <img src="./assets/images/google-1-1-logo-svgrepo-com-CKRs7Y62.svg" alt="Google" class="brand-logo w-40">
-            <img src="./assets/images/télécharger (1).svg" alt="LinkedIn" class="brand-logo w-40">
-            <img src="./assets/images/microsoft-logo-svgrepo-com-BW1l55DS.svg" alt="Microsoft" class="brand-logo w-40">
-            <img src="./assets/images/slack-logo-svgrepo-com-CABMsxVD.svg" alt="Slack" class="brand-logo w-40">
-            <img src="./assets/images/spotify-1-logo-svgrepo-com-BMQu_51-.svg" alt="Spotify" class="brand-logo w-40">
-            <img src="./assets/images/télécharger.svg" alt="Netflix" class="brand-logo w-40">
+            <img src="./assets/images/google-1-1-logo-svgrepo-com-CKRs7Y62.svg" alt="Google" class="brand-logo w-32">
+            <img src="./assets/images/télécharger (1).svg" alt="LinkedIn" class="brand-logo w-32">
+            <img src="./assets/images/microsoft-logo-svgrepo-com-BW1l55DS.svg" alt="Microsoft" class="brand-logo w-32">
+            <img src="./assets/images/slack-logo-svgrepo-com-CABMsxVD.svg" alt="Slack" class="brand-logo w-32">
+            <img src="./assets/images/spotify-1-logo-svgrepo-com-BMQu_51-.svg" alt="Spotify" class="brand-logo w-32">
+            <img src="./assets/images/télécharger.svg" alt="Netflix" class="brand-logo w-32">
         </div>
     </section>
 
