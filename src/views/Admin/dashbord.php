@@ -65,7 +65,8 @@ function getcount($user)
         $users = Crud::select("users", "COUNT(*) as count", "role = '$user' AND created_at BETWEEN '$startDate' AND '$endDate' AND status = 'active'");
 
         // Store count in array
-        $data[] = $users[0]["count"] ?? 0; // Ensure valid data even if query fails
+        $data[] = $users[0]["count"] ?? 0;
+
     }
 
     return $data;
@@ -77,9 +78,8 @@ $data1 = getcount('teacher');
 // Sample student data (static for example)
 $data2 = getcount('student');
 
-$userspanding = Crud::select("users", "*", "status ='pending' AND role != 'admin' LIMIT 6");
-$userActive = Crud::select("users", "*", "status ='active' AND role != 'admin' LIMIT 6");
-$usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'admin' LIMIT 6");
+
+$userActive = Crud::select("users", "*",  "role != 'admin' LIMIT 6");
 
 
 
@@ -156,7 +156,7 @@ $usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'a
 
                         <h2 class="text-xl font-bold mb-2">Total Articles</h2>
 
-                        <p class="text-gray-700">89</p>
+                        <p class="text-gray-700 font-bold text-4xl">89</p>
                     </div>
 
 
@@ -168,7 +168,7 @@ $usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'a
                             </svg>
 
                         </div>
-                        <p class="text-gray-700"><?=$countusers[0]["count"]?></p>
+                        <p class="text-gray-700 font-bold text-4xl"><?=$countusers[0]["count"]?></p>
                     </div>
                     <div class="bg-[#e8f8d4] p-6 rounded-lg shadow-lg">
                         <div class="flex justify-between items-center">
@@ -180,7 +180,7 @@ $usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'a
 
                         </div>
 
-                        <p class="text-gray-700"><?= $tagcount[0]["count"] ?></p>
+                        <p class="text-gray-700 font-bold text-4xl"><?= $tagcount[0]["count"] ?></p>
 
                     </div>
 
@@ -201,18 +201,18 @@ $usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'a
             </section>
             <section class="flex-1 p-6">
                 <div class="flex gap-4 w-full">
-                    <div class="w-1/3">
+                    <div class="w-full">
                         <div class="flex gap-2 justify-between px-2 items-center">
-                    <h1 class="text-3xl font-bold text-green-400 mb-4">Users Active</h1>
+                    <h1 class="text-3xl font-bold text-green-400 mb-4">Users Table</h1>
 <div class="w-5 h-5 bg-green-400 rounded-full"></div>
                         </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto w-full">
                         <table class="min-w-full bg-white">
                             <thead>
                                 <tr class="bg-green-400 text-white">
 
                                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">username</th>
-
+                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">email</th>
                                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">role</th>
                                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Status</th>
 
@@ -224,6 +224,7 @@ $usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'a
                                     <tr>
                                         <td class="py-2 px-4 border-b border-gray-300"><?= $user['username'] ?></td>
 
+                                        <td class="py-2 px-4 border-b border-gray-300"> <?= $user['email'] ?></td>
                                         <td class="py-2 px-4 border-b border-gray-300"> <?= $user['role'] ?></td>
 
                                         <td class="py-2 px-4 border-b
@@ -250,108 +251,6 @@ $usersSuspended = Crud::select("users", "*", "status ='suspended' AND role != 'a
                             </tbody>
                         </table>
                         <button class="bg-green-500 w-full  py-2"><a href="./pages/users.php">view all</a> </button>
-                    </div>
-                </div>
-
-                <div class="w-1/3">
-                <div class="flex gap-2 justify-between px-2 items-center">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Users panding</h1>
-<div class="w-5 h-5 bg-orange-400 rounded-full"></div>
-                        </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full bg-white">
-                            <thead>
-                                <tr class="bg-orange-400 text-white">
-
-                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">username</th>
-                                   
-                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">role</th>
-                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Status</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($userspanding as $user) : ?>
-
-                                    <tr>
-                                        <td class="py-2 px-4 border-b border-gray-300"><?= $user['username'] ?></td>
-
-                                        <td class="py-2 px-4 border-b border-gray-300"> <?= $user['role'] ?></td>
-
-                                        <td class="py-2 px-4 border-b
-                        <?php
-                                    if ($user['status'] == "pending") {
-                                        echo "text-orange-400";
-                                    }
-                                    if ($user['status'] == "suspended") {
-                                        echo "text-red-400";
-                                    }
-                                    if ($user['status'] == "active") {
-                                        echo "text-green-400";
-                                    }
-
-
-
-                        ?>
-                
-                 border-gray-300"><?= $user['status'] ?></td>
-
-                                    </tr>
-                                <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-                        <button class="bg-orange-400 w-full py-2"><a href="./pages/users.php">view all</a></button>
-                    </div>
-                </div>
-                <div class="w-1/3">
-                <div class="flex gap-2 justify-between px-2 items-center">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Users Suspended</h1>
-<div class="w-5 h-5 bg-red-500 rounded-full"></div>
-                        </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full bg-white">
-                            <thead>
-                                <tr class="bg-red-500 text-white">
-
-                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">username</th>
-                                   
-                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">role</th>
-                                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Status</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($usersSuspended as $user) : ?>
-
-                                    <tr>
-                                        <td class="py-2 px-4 border-b border-gray-300"><?= $user['username'] ?></td>
-                                        <td class="py-2 px-4 border-b border-gray-300"> <?= $user['role'] ?></td>
-
-                                        <td class="py-2 px-4 border-b
-                        <?php
-                                    if ($user['status'] == "pending") {
-                                        echo "text-orange-400";
-                                    }
-                                    if ($user['status'] == "suspended") {
-                                        echo "text-red-400";
-                                    }
-                                    if ($user['status'] == "active") {
-                                        echo "text-green-400";
-                                    }
-
-
-
-                        ?>
-                
-                 border-gray-300"><?= $user['status'] ?></td>
-
-                                    </tr>
-                                <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-                        <button class="bg-red-500 w-full py-2"><a href="./pages/users.php">view all</a></button>
                     </div>
                 </div>
             </div>

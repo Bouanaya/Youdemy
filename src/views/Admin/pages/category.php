@@ -337,7 +337,7 @@ Dashboard</a></li>
                     foreach ($countCategory as $category)
                     
                     ?>
-                    <p class="text-gray-700">
+                    <p class="text-gray-700 font-bold text-4xl">
                     <?= $category["count(*)"] ?>
                     </p>
                 </div>
@@ -354,26 +354,26 @@ Dashboard</a></li>
         <table class=" w-[60%] bg-white"> 
             <thead class="sticky top-0 z-10">
                 <tr class=" border-b-4 bg-[#98a588]">
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">ID</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Title</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">description</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Action</th>
+                    <th class="py-2 px-4  border-gray-300 text-left leading-tight">ID</th>
+                    <th class="py-2 px-4  border-gray-300 text-left leading-tight">Title</th>
+                    <th class="py-2 px-4  border-gray-300 text-left leading-tight">description</th>
+                    <th class="py-2 px-4  border-gray-300 text-left leading-tight">Action</th>
                  
                     </tr>
             </thead>
             <tbody>
                 <?php foreach ($categorys as $category) : ?>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-gray-300"><?= $category['categoryId'] ?></td>
-                        <td class="py-2 px-4 border-b border-gray-300"><?= $category['categoryName'] ?></td>
-                        <td class="py-2 px-4 border-b border-gray-300"><?php
+                    <tr class="border-b">
+                        <td class="py-2 px-4 border-gray-300"><?= $category['categoryId'] ?></td>
+                        <td class="py-2 px-4 border-gray-300"><?= $category['categoryName'] ?></td>
+                        <td class="py-2 px-4 border-gray-300"><?php
                    strlen($category['description']) > 12 ? $texte_affiche = substr($category['description'], 0, 12) . '...' : $texte_affiche = $category['description'];
 
                         echo $texte_affiche; // Résultat : "Ceci est un ..."
                         
                         
                         ?></td>
-                        <td class="py-2 px-4 border-b border-gray-300 flex space-x-4">
+                        <td class="py-2 px-4 border-gray-300 flex space-x-4">
                             <a href="./Category.php?action=update&id=<?= $category['categoryId'] ?>" class="bg-blue-400 text-white py-1 px-2 rounded hover:bg-blue-600">Edit</a>
                             <a href="../../../Controllers/category.php?action=delete&id=<?= $category['categoryId'] ?>" class="bg-red-400 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
                         </td>

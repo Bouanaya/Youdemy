@@ -320,7 +320,7 @@ Dashboard</a></li>
                     <!-- Card 1 -->
                     <div class="bg-[#B1F0F7] p-6 rounded-lg shadow-lg">
                         <h2 class="text-xl font-bold mb-2">Total</h2>
-                        <p class="text-gray-700"><?= $count_tag[0]['total'] ?></p>
+                        <p class="text-gray-700 font-bold text-4xl"><?= $count_tag[0]['total'] ?></p>
                     </div>
 
 
@@ -342,10 +342,10 @@ Dashboard</a></li>
                         </thead>
                         <tbody>
                             <?php foreach ($tags as $tag) : ?>
-                                <tr>
-                                    <td class="py-2 px-4 border-b border-gray-300"><?= $tag['tagId'] ?></td>
-                                    <td class="py-2 px-4 border-b border-gray-300"><?= $tag['tagName'] ?></td>
-                                    <td class="py-2 px-4 border-b border-gray-300 flex space-x-4">
+                                <tr class="border-b">
+                                    <td class="py-2 px-4  border-gray-300"><?= $tag['tagId'] ?></td>
+                                    <td class="py-2 px-4  border-gray-300"><?= $tag['tagName'] ?></td>
+                                    <td class="py-2 px-4  border-gray-300 flex space-x-4">
                                         <a href="./tag.php?action=update&id=<?= $tag['tagId'] ?>" class="bg-blue-400 text-white py-1 px-2 rounded hover:bg-blue-600">Edit</a>
                                         <a href="../../../Controllers/Tag.php?action=delete&id=<?= $tag['tagId'] ?>" class="bg-red-400 text-white py-1 px-2 rounded hover:bg-red-600">Delete</a>
                                     </td>

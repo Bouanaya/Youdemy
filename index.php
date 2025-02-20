@@ -11,27 +11,22 @@
 </head>
 <body class="bg-white">
     <!-- Navigation -->
-    <nav class="fixed bg-transparent w-screen bg-white border-b-2 border-green-400 z-10">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="" class="text-2xl text-green-500">🎓 E-Learning</a>
-            </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="./src/views/Auth/SignIn.php" class="bg-green-200 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign In</a>
-                <a href="./src/views/Auth/SignUp.php" class="bg-green-500 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign Up</a>
-            </div>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-green-500 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
-                    </svg>
-                </button>
-            </div>
+
+    <nav class="fixed bg-transparent w-screen bg-white border-b-2 border-green-400 z-10 ">
+        <div class="bg-white shadow flex items-center justify-between px-16 py-2 ">
+        <!-- Left: LinkedIn Logo & Search -->
+        <div class="flex items-center space-x-4">
+            <img src="./assets/images/letter-y-logo-3d-colorful-design-modern-icon_345408-515-removebg-preview.png" alt="LinkedIn" class="w-10 h-10 rounded">
+            
         </div>
-        <div id="mobile-menu" class="hidden md:hidden">
+        <div id="mobile-menu" class="hidden md:flex gap-3">
             <a href="./src/views/Auth/SignIn.php" class="block bg-green-200 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign In</a>
             <a href="./src/views/Auth/SignUp.php" class="block bg-green-500 text-white px-4 py-2 rounded-md animate__animated animate__swing">Sign Up</a>
         </div>
+
+     
+    
+    </div>
     </nav>
 
     <!-- Hero Section -->

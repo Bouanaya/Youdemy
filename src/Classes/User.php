@@ -47,11 +47,10 @@ return ;
         $stmt=$pdo->prepare("SELECT * FROM users where email=?");
         $stmt->execute([$email]);
         $user =$stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($user);
         if ($user["email"] !== $email){
            echo '<script>alert("email incorrect")</script>';
         }
-        else if ($user["email"]==$email && password_verify($password, $user['password']) ){
+        else if ($user["email"]==$email && password_verify($password, $user['password']) && $user["status"] == "active" ){
             session_start();
             $_SESSION['userId']=$user['userId'];
             $_SESSION['userName']=$user['username'];
@@ -76,40 +75,11 @@ return ;
                 echo "<script>
              alert('email ou mot de passe incorrect');
             </script>";
-        }
-  
-//         if ($user && password_verify($password, $user['password']) ){
-         
-//            $_SESSION['userId']=$user['userId'];
-//            $_SESSION['userName']=$user['username'];
-//            $_SESSION['email']=$user['email'];
-//            $_SESSION['role']=$user['role'];
-//            if($_SESSION['role']=="student"){
-               
-//             var_dump($_SESSION['role']);
-//                header("Location: http://localhost/Youdemy/src/views/Student/Student.php");
-//             }
-//             else if ($_SESSION['role']=="teacher"){
-//                 header("Location: http://localhost/Youdemy/src/views/enseignant/enseignant.php");
+            header("Location: http://localhost/Youdemy/src/views/Auth/SignIn.php");
 
-//             }
-//             else if ($_SESSION['role']=="admin"){
-//                 header("Location: http://localhost/Youdemy/src/views/Admin/dashbord.php");
-
-//             }
             
-//         }
- 
+        }
 
-           
- 
-//      else {
-       
-//     header("Location: http://localhost/Youdemy/src/views/Auth/signIn.php");
-//     echo "<script>
-//     document.getElementById('form').reset()
-// </script>";
-//         }
     }
     
 

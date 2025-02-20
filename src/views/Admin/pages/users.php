@@ -5,10 +5,12 @@ use src\Classes\Crud;
 use src\config\Database;
 $tag = new Tag();
 $tags = $tag->gettags(); 
-$coutUsers = Crud::select("users" , "count(*)");
-$users = Crud::select("users","*", "role = 'teacher' or role ='student' ");
+$coutTeacher = Crud::select("users" , "count(*)as count", "role = 'teacher'" );
+$coutusers = Crud::select("users" , "count(*)as count", "role != 'admin'" );
+$coutStudent = Crud::select("users" , "count(userId) as count", "role = 'student'");
 $teacher = Crud::select("users","*", "role = 'teacher' ");
 $Database = new Database;
+
 session_start();
 if ( $_SESSION['role'] != 'admin') {
     header('Location: http://localhost/Youdemy/src/views/Auth/signIn.php');
@@ -21,6 +23,24 @@ if ($search) {
     $result = Crud::select("users","*", " username LIKE '$search' OR email LIKE '$search'");
 
 }
+
+$limit = 10;
+$pages = $coutusers[0]['count'] / $limit;
+$total_pages = ceil($pages);
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Page actuelle
+$start = ($page - 1) * $limit; 
+$users = Crud::select("users","*", "role = 'teacher' or role ='student' LIMIT $start, $limit ");
+if(isset($_GET['page'])){
+    echo "<script>
+        window.onload = function() {
+            window.scrollTo(0, 300);  // Défilement vertical à 300px
+        };
+    </script>";
+    
+    }
+
+
+
 ?>
  
 <!DOCTYPE html>
@@ -96,14 +116,28 @@ Dashboard</a></li>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Card 1 -->
+           
                 <div class="bg-[#FAFFC5] p-6 rounded-lg shadow-lg">
-                    <h2 class="text-xl font-bold mb-2">Total Users</h2>
-                    <?php
-                    foreach ($coutUsers as $user)
+                    <div class="flex justify-between">
+                    <h2 class="text-xl font-bold mb-2">Total Teacher</h2>
+                    <img src="../../../../assets/images/icons8-teacher-64 (2).png" alt="" class="w-16">
+                    </div>
+                  
+                  
+                    <p class="text-gray-700 font-bold text-4xl">
+                    <?= $coutTeacher[0]["count"] ?>
+                    </p>
+                </div>
+                <div class="bg-[#FAFFC5] p-6 rounded-lg shadow-lg">
+                    <div class="flex justify-between">
+                    <h2 class="text-xl font-bold mb-2">Total Student</h2>
+                    <img src="../../../../assets/images/icons8-student-94.png" alt="" class="w-16">
+                    </div>
+                 
                     
-                    ?>
-                    <p class="text-gray-700">
-                    <?= $user["count(*)"] ?>
+             
+                    <p class="text-gray-700 font-bold text-4xl">
+                    <?= $coutStudent[0]["count"] ?>
                     </p>
                 </div>
               
@@ -115,10 +149,10 @@ Dashboard</a></li>
     <div class="flex justify-between items-center">
     <h1 class="text-3xl font-bold text-gray-900 mb-4">Users Table</h1>
 
-    <div class="flex items-center gap-2">
-        <form action="">
-                <input type="text" placeholder="Search..." name="search" class="outline-none py-2 rounded-lg px-2">
-                <input type="submit" class="bg-green-400 text-white px-4 py-2 rounded-md cursor-pointer" value="Search">
+    <div class="flex items-center gap-2 ">
+        <form action="" >
+                <input type="text" placeholder="Search..." name="search" class="outline-none py-2 rounded-lg px-2 w-[400px]">
+                <input type="submit" class="bg-blue-400 text-white px-4 py-2 rounded-md cursor-pointer" value="Search">
                 </form>
             </div>
             </div>
@@ -129,38 +163,52 @@ Dashboard</a></li>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">ID</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">username</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">email</th>
+                    <th class="py-2 px-4 border-b-2 border-gray-300 text-center leading-tight t">Status</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">role</th>
-                    <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Status</th>
                     <th class="py-2 px-4 border-b-2 border-gray-300 text-left leading-tight">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($result ?? $users as $user) :?>
                 
-                <tr>
+                <tr class="border-b">
                     <td class="py-2 px-4 border-b border-gray-300"> <?=$user['userId']?> </td>
                     <td class="py-2 px-4 border-b border-gray-300"><?=$user['username']?></td>
                     <td class="py-2 px-4 border-b border-gray-300"><?=$user['email']?></td>
-                    <td class="py-2 px-4 border-b border-gray-300"> <?=$user['role']?></td>
-            
-                    <td class="py-2 px-4 border-b
-                            <?php
+                    <td  class="py-2 px-2  flex justify-center items-center">
+                        <img src="
+                         <?php
                     if ($user['status'] == "pending") {
-                       echo "text-orange-400";
+                       echo "../../../../assets/images/pending (1).png";
                     }
                     if ($user['status'] == "suspended") {
-                        echo "text-red-400";
+                        echo "../../../../assets/images/suspended.png";
+
                      }
                      if ($user['status'] == "active") {
-                        echo "text-green-400";
+                        echo "../../../../assets/images/check.png";
+
                      }
 
 
                     
                     ?>
-                    
-                     border-gray-300"><?=$user['status']?></td>
-                    <td class="py-2 px-4 border-b border-gray-300 flex space-x-4">
+                        
+                        " alt="" class="w-6">
+               </td>
+                    <td class="py-2 px-4 border-b border-gray-300"> 
+                      <?php if($user['role']=="teacher"){
+                            echo 'Teacher';
+
+                        }
+                        else{
+                            echo 'Student';
+                        } ?>
+                   
+                    </td>
+            
+      
+                    <td class="py-2 px-4  border-gray-300 flex space-x-4">
                         <a href="../../../Controllers/user.php?action=active&id=<?=$user['userId'] ?> " class="bg-green-400 text-white py-1 px-2 rounded hover:bg-green-600">active</a>
                             <a href="../../../Controllers/user.php?action=suspended&id=<?=$user['userId'] ?>" class="bg-red-400 text-white py-1 px-2 rounded hover:bg-red-600">suspended</a>
                             <a href="../../../Controllers/user.php?action=pending&id=<?=$user['userId'] ?>" class="bg-orange-400 text-white py-1 px-2 rounded hover:bg-orange-600">pending</a>
@@ -171,6 +219,28 @@ Dashboard</a></li>
 
             </tbody>
         </table>
+        <nav class="flex space-x-2 mt-2 justify-center items-center">
+        <!-- Précédent -->
+        <?php if ($page > 1): ?>
+            <a href="?page=<?php echo $page - 1; ?>" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300">
+                « Prev
+            </a>
+        <?php endif; ?>
+
+        <!-- Pages -->
+        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <a href="?page=<?php echo $i; ?>" class="px-4 py-2 <?php echo ($i == $page) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'; ?> rounded-md">
+                <?php echo $i; ?>
+            </a>
+        <?php endfor; ?>
+
+        <!-- Suivant -->
+        <?php if ($page < $total_pages): ?>
+            <a href="?page=<?php echo $page + 1; ?>" class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300">
+                Next »
+            </a>
+        <?php endif; ?>
+    </nav>
     </div>
 </section>
 

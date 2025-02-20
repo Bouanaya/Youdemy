@@ -85,6 +85,10 @@ BEGIN
 END; //
 
 DELIMITER ;
+
+ALTER TABLE Courses 
+ADD status ENUM('draft', 'published', 'archived') NOT NULL DEFAULT 'draft';
+
 -- =================================================fin trigger=================================
 
 
@@ -106,14 +110,62 @@ INSERT INTO `users`( `username`, `email`, `password`, `role`) VALUES ('NOUHIALA'
 
 INSERT INTO users (username, email, password, role, status, created_at) VALUES
 -- 5 Users on 2025-01-10
-('user1', 'userS14DZD@example.com', 'password123', 'student', 'active', '2025-04-10 08:00:00'),
-('user2', 'userD2E4D@example.com', 'password123', 'teacher', 'pending', '2025-04-10 09:15:00'),
-('user3', 'user3ZS4D@example.com', 'password123', 'student', 'suspended', '2025-04-10 10:30:00'),
-('user4', 'userE4Z4D@example.com', 'password123', 'teacher', 'active', '2025-02-10 11:45:00'),
-('user5', 'userZE5D4@example.com', 'password123', 'student', 'pending', '2025-05-10 13:00:00'),
-('user6', 'userE6ED4@example.com', 'password123', 'teacher', 'suspended', '2025-05-20 08:45:00'),
-('user7', 'useZr7RD4@example.com', 'password123', 'student', 'active', '2025-07-20 10:00:00'),
-('user8', 'useSr8RD4@example.com', 'password123', 'teacher', 'pending', '2025-07-20 11:15:00')
+('user1s', 'userS1s4DZD@example.com', 'password123', 'student', 'active', '2025-04-10 08:00:00'),
+('user2s', 'userD2E4Ds@example.com', 'password123', 'teacher', 'pending', '2025-04-10 09:15:00'),
+('user3s', 'user3ZS4Ds@example.com', 'password123', 'student', 'suspended', '2025-04-10 10:30:00'),
+('userss', 'userE4Z4Ds@example.com', 'password123', 'teacher', 'active', '2025-02-10 11:45:00'),
+('user5s', 'userZE5D4s@example.com', 'password123', 'student', 'pending', '2025-05-10 13:00:00'),
+('user6s', 'userE6ED4s@example.com', 'password123', 'teacher', 'suspended', '2025-05-20 08:45:00'),
+('user7s', 'useZr7RD4s@example.com', 'password123', 'student', 'active', '2025-07-20 10:00:00'),
+('user8s', 'useSr8RD4s@example.com', 'password123', 'teacher', 'pending', '2025-07-20 11:15:00')
 ;
 
-ALTER TABLE users ADD COLUMN slug VARCHAR(255) UNIQUE;
+ALTER TABLE Courses 
+ADD status ENUM('draft', 'published', 'archived') NOT NULL DEFAULT 'draft';
+
+
+ALTER TABLE Courses 
+ADD devise VARCHAR(10) NOT NULL DEFAULT 'USD';
+
+
+ALTER TABLE CourseTags 
+ADD CONSTRAINT fk_course_tag FOREIGN KEY (courseId) REFERENCES Courses(courseId) ON DELETE CASCADE,
+ADD CONSTRAINT fk_tag FOREIGN KEY (tagId) REFERENCES Tags(tagId) ON DELETE CASCADE;
+
+
+
+SELECT 
+    c.courseId,
+    c.title,
+    c.description,
+    c.content,
+    c.teacherId,
+    c.categoryId,
+    c.status,
+    GROUP_CONCAT(DISTINCT t.tagName ORDER BY t.tagName SEPARATOR ', ') AS tags
+FROM 
+    Courses c
+LEFT JOIN 
+    CourseTags ct ON c.courseId = ct.courseId
+LEFT JOIN 
+    Tags t ON ct.tagId = t.tagId
+GROUP BY 
+    c.courseId
+ORDER BY 
+    c.created_at DESC;
+
+
+ SELECT c.*, 
+                    ca.name AS category_name, 
+                    u.username AS enseignant_name, 
+                    GROUP_CONCAT(t.name) AS tags,
+                    DATE(c.scheduled_date) AS scheduled_date_only
+                FROM cours c
+                LEFT JOIN categories ca ON c.category_id = ca.id
+                LEFT JOIN users u ON c.enseignant_id = u.id
+                LEFT JOIN cours_tags ct ON c.id = ct.cours_id
+                LEFT JOIN tags t ON ct.tag_id = t.id
+                WHERE (c.contenu_document IS NOT NULL AND c.contenu_document != '') 
+                  AND (c.contenu_video IS NULL OR c.contenu_video = '')
+                GROUP BY c.id
+                ORDER BY c.created_at DESC
