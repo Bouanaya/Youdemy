@@ -1,17 +1,55 @@
 <?php
 require_once  "../../../vendor/autoload.php";
+
+use src\Classes\Cours;
 use src\config\Database;
 use src\Classes\Crud;
-use Src\Classes\Course;
+
+
 
 
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'enseignant') {
-    // header('Location: ../../../index.php');
-}
 
-if (isset($_POST['Title']) && isset($_POST['Description']) && isset($_POST['category']) && isset($_POST['price'])) {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'teacher') {
+    header('Location: ../../../index.php');}
+
+    $teacherId = $_SESSION['userId'];
+if(isset($_POST['update'])){
+ 
+    $data = [
+        'title' => $_POST['Title'],
+        'description' => $_POST['Description'],
+        'categoryId' => $_POST['category'],
+        'price' => $_POST['price'],
+        'teacherId' => $_SESSION['userId'],
+        "content" => $_POST['fileInput'] ?? $_POST['urlInput'],
+        'status' => $_POST['status'],
+        'devise' => $_POST['devise'],
+        'courseId' => $_GET['id']
+    ];
+   $updateecours =new Cours();
+    $result = $updateecours->updateCours($data, $_GET['id']);
+    if (!empty($_POST['tags']) && is_array($_POST['tags'])) {
+        Crud::delete('coursetags', 'courseId = :courseId', ['courseId' => $_GET['id']]);
+            $tags = $_POST['tags'];
+            foreach ($tags as $tagId) {
+                $data = [
+                    'courseId' =>  $_GET['id'],
+                    'tagId' => $tagId
+                ];
+                Crud::insert('coursetags', $data);
+                $cou = new Cours;
+$courses = $cou->selectall($teacherId);
+header('Location: enseignant.php');
+         
+            } 
+                 
+    }
+
+ 
+}
+if (isset($_POST['submit'])) {
     if (isset($_POST['contentTypeToggle'])) {
         $data['Type'] = 'file';
         $data['URL'] = $_POST['fileInput'];
@@ -33,7 +71,6 @@ if (isset($_POST['Title']) && isset($_POST['Description']) && isset($_POST['cate
     ];
     $result = Crud::insert('courses', $data);
    $articleId = Database::connect()->lastInsertId();
-
     if ($result) {
         $tags = $_POST['tags'];
      
@@ -41,13 +78,11 @@ if (isset($_POST['Title']) && isset($_POST['Description']) && isset($_POST['cate
             foreach ($tags as $tagId) {
                 $data = [
                     'courseId' =>  $articleId,
-                    'tagId' => $tagId
+                    'tagId' => (int)$tagId
                 ];
                 Crud::insert('coursetags', $data);
-
+       
             }
-        echo "<script>alert('Course added successfully')</script>";
-
     } else {
         echo "<script>alert('Failed to add course')</script>";
     }
@@ -57,7 +92,28 @@ if (isset($_POST['Title']) && isset($_POST['Description']) && isset($_POST['cate
 
 $tags = Crud::select('tags');
 $categories = Crud::select('category');
-$courses = Crud::selectall();
+$courses = new Cours;
+$courses = $courses->selectall($teacherId);
+
+
+
+if(isset($_GET['action']) && $_GET['action'] == 'update' && isset($_GET['id'])){
+    $course = Crud::select('courses', '*', 'courseId = :courseId', ['courseId' => $_GET['id']]);
+
+    echo "<script>
+document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('addModal').classList.toggle('hidden');
+            document.body.style.overflow = 'hidden';
+   
+});
+</script>";
+
+}
+
+if(isset($_GET['action']) && $_GET['action'] == 'dalete' && isset($_GET['id'])){
+    $course = Crud::delete('courses', 'courseId = :courseId', ['courseId' => $_GET['id']]);
+    header('Location: enseignant.php');
+}
 
 
 
@@ -106,7 +162,10 @@ $courses = Crud::selectall();
     <div class="fixed  w-full h-full bg-green-700 bg-opacity-50 z-50 flex justify-center hidden items-center " id="addModal">
         <div class="bg-white w-1/3 p-8  shadow-lg">
             <div class="flex justify-between items-center border-b border-green-500">
-                <h2 class="text-2xl font-semibold mb-4 text-green-500  ">Add Course</h2>
+                <h2 class="text-2xl font-semibold mb-4 text-green-500  ">
+                <?= isset($course) ? 'Update Course' : 'Add Course' ?>
+               </h2>
+             
                 <button id="close" class="w-6 h-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -116,37 +175,46 @@ $courses = Crud::selectall();
                 </button>
             </div>
             <form action="" method="POST" enctype="multipart/form-data" class="">
-                <div class="mb-4">
+                <div class="my-2">
                     <label for="contentTitle" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" name="Title" id="contentTitle" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition" placeholder="Enter title" required>
+                    <input type="text" name="Title" id="contentTitle" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition"
+                    value="<?= isset($course) ? trim($course[0]["title"]) : '' ?>"placeholder="Enter title" required>
+
+                    <input type="hidden" name="courseId" id="contentTitle" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition"
+                    value=" <?= isset($course) ? $course[0]["courseId"] : '' ?>
+                    "
+                    placeholder="Enter title" required>
                 </div>
-                <div class="mb-4">
+                <div class="mb-2">
                     <label for="contentDescription" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="Description" id="contentDescription" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition" placeholder="Enter description" required></textarea>
+                    <textarea name="Description" id="contentDescription"  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition" placeholder="Enter description" required><?= isset($course) ? $course[0]["description"] : '' ?></textarea>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-2">
                     <label for="contentTypeToggle" class="block text-sm font-medium text-gray-700">Content Type</label>
                     <div class="flex items-center">
-                        <input type="checkbox" name="contentTypeToggle" id="contentTypeToggle" class="mr-2">
+                        <input type="checkbox" name="contentTypeToggle"  id="contentTypeToggle" class="mr-2">
                         <label for="contentTypeToggle" class="text-sm text-gray-700">File</label>
                     </div>
-                    <div class="mb-4">
-                        <input type="text" name="urlInput" id="urlInput" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition hidden" placeholder="Enter URL">
+                    <div class="mb-2">
+                        <input type="text" name="urlInput" value="<?= isset($course[0]["content"]) ? $course[0]["content"] : '' ?>" id="urlInput" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition hidden" placeholder="Enter URL">
                         <input type="file" name="fileInput" id="fileInput" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition hidden">
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-2">
                         <label for="category">Category</label>
-                        <select name="category" id="category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition">
+                        <select name="category" id="category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition" required> 
 
-                            <?php foreach ($categories as $categorie) : ?>
+                            <?php
+                           echo "<option value=''>Select category</option>";
+                            foreach ($categories as $categorie) : ?>
                                 <option value="<?= $categorie['categoryId'] ?>"><?= $categorie['categoryName'] ?></option>
 
                             <?php endforeach; ?>
+                            
                         </select>
                     </div>
-                    <div class="mb-4  ">
+                    <div class="mb-2  ">
                         <label for="tags" class="block text-sm font-medium text-gray-700">Tags</label>
                         <div class="flex flex-wrap gap-2 ">
                         <?php foreach ($tags as $tag) : ?>
@@ -157,10 +225,10 @@ $courses = Crud::selectall();
                         <?php endforeach; ?>
                     </div>
                     </div>
-                    <div class="mb-4 flex gap-3">
+                    <div class="mb-2 flex gap-3">
                         <div class="">
                         <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-                        <input type="number" name="price" min="0" id="price" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition" placeholder="Enter price" required>
+                        <input type="number" name="price" min="0" id="price" value="<?= isset($course) ? $course[0]["price"] : '' ?>" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition" placeholder="Enter price" required>
                         </div>
                         
                         <div class="">
@@ -178,7 +246,7 @@ $courses = Crud::selectall();
                   
                     
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-2">
                         <label for="Status" class="block text-sm font-medium text-gray-700">status</label>
                         <select name="status" id="" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm input-transition">
                             <option value="draft">Draft</option>
@@ -187,7 +255,7 @@ $courses = Crud::selectall();
                         </select>
                     </div>
 
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded-lg w-full">Add</button>
+                    <button type="submit" name="<?= isset($course) ? "update" : 'submit' ?>" class="bg-blue-500 text-white px-4 py-1 rounded-lg w-full"><?= isset($course) ? "Update" : 'Submit' ?></button>
 
 
 
@@ -266,9 +334,11 @@ $courses = Crud::selectall();
             <div class="flex flex-col items-center cursor-pointer group text-gray-500 hover:text-blue-600">
 
                 <div class="relative">
+                    <a href="./pages/profile.php?id=<?= $_SESSION['userId']?>">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
+                    </a>
                 </div>
                 <p class="text-xs mt-1"><?php
 
@@ -286,13 +356,17 @@ $courses = Crud::selectall();
     <section class="container mx-auto px-6 pb-16 pt-10 bg-green-100 rounded-3xl">
         <div class="flex gap-10 items-center mb-8">
             <h2 class="text-4xl text-gray-800 w-full">Most Popular Courses</h2>
-
-            <button class="w-10  bg-blue-500 text-white p-2 rounded-full bounce-in-fwd" id="addo">
+            <?php if(isset($course)){
+                echo "";
+               }else{
+                echo '<button class="w-10  bg-blue-500 text-white p-2 rounded-full bounce-in-fwd" id="addo">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
 </svg>
 
-            </button>
+            </button>';
+               } ?>
+        
         
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -340,15 +414,14 @@ $courses = Crud::selectall();
                         <div class="flex items-center justify-between mt-4 border-t pt-4">
                             <span class="text-yellow-600 font-semibold text-3xl"><?= $course['price'] . " ". $course['devise']?></span>
                             <div class="flex items-center gap-4">
-                                <a href="" class="w-6 bg-blue-200 rounded "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-blue-600 ">
+                                <a href="enseignant.php?id=<?= $course["courseId"] ?>&action=update" class="w-6  rounded "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-blue-600 ">
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
 </svg>
                                             </a>
-                                <a href="" class="w-6 bg-red-200 rounded "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-600">
+                                <a href="enseignant.php?id=<?= $course["courseId"] ?>&action=dalete" class="w-6  rounded "><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-600">
   <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
 </svg>
-</a>
-                                
+</a>                           
                             </div>
                         </div>
                     </div>

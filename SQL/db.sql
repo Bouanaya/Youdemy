@@ -108,16 +108,7 @@ INSERT INTO `users`( `username`, `email`, `password`, `role`) VALUES ('NOUHIALA'
 
 
 
-INSERT INTO users (username, email, password, role, status, created_at) VALUES
--- 5 Users on 2025-01-10
-('user1s', 'userS1s4DZD@example.com', 'password123', 'student', 'active', '2025-04-10 08:00:00'),
-('user2s', 'userD2E4Ds@example.com', 'password123', 'teacher', 'pending', '2025-04-10 09:15:00'),
-('user3s', 'user3ZS4Ds@example.com', 'password123', 'student', 'suspended', '2025-04-10 10:30:00'),
-('userss', 'userE4Z4Ds@example.com', 'password123', 'teacher', 'active', '2025-02-10 11:45:00'),
-('user5s', 'userZE5D4s@example.com', 'password123', 'student', 'pending', '2025-05-10 13:00:00'),
-('user6s', 'userE6ED4s@example.com', 'password123', 'teacher', 'suspended', '2025-05-20 08:45:00'),
-('user7s', 'useZr7RD4s@example.com', 'password123', 'student', 'active', '2025-07-20 10:00:00'),
-('user8s', 'useSr8RD4s@example.com', 'password123', 'teacher', 'pending', '2025-07-20 11:15:00')
+
 ;
 
 ALTER TABLE Courses 
@@ -142,11 +133,13 @@ SELECT
     c.teacherId,
     c.categoryId,
     c.status,
+    ca.categoryName,
     GROUP_CONCAT(DISTINCT t.tagName ORDER BY t.tagName SEPARATOR ', ') AS tags
 FROM 
     Courses c
 LEFT JOIN 
-    CourseTags ct ON c.courseId = ct.courseId
+    CourseTags ct ON c.courseId = ct.courseId 
+JOIN category ca ON c.categoryId = ca.categoryId
 LEFT JOIN 
     Tags t ON ct.tagId = t.tagId
 GROUP BY 
@@ -155,17 +148,32 @@ ORDER BY
     c.created_at DESC;
 
 
- SELECT c.*, 
-                    ca.name AS category_name, 
-                    u.username AS enseignant_name, 
-                    GROUP_CONCAT(t.name) AS tags,
-                    DATE(c.scheduled_date) AS scheduled_date_only
-                FROM cours c
-                LEFT JOIN categories ca ON c.category_id = ca.id
-                LEFT JOIN users u ON c.enseignant_id = u.id
-                LEFT JOIN cours_tags ct ON c.id = ct.cours_id
-                LEFT JOIN tags t ON ct.tag_id = t.id
-                WHERE (c.contenu_document IS NOT NULL AND c.contenu_document != '') 
-                  AND (c.contenu_video IS NULL OR c.contenu_video = '')
-                GROUP BY c.id
-                ORDER BY c.created_at DESC
+
+
+ALTER TABLE Courses DROP FOREIGN KEY fk_category;
+
+ALTER TABLE Courses 
+ADD CONSTRAINT fk_category 
+FOREIGN KEY (categoryId) 
+REFERENCES category(categoryId) 
+ON DELETE CASCADE;
+
+
+
+
+                -- Drop existing foreign keysCONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`) ON DELETE CASCADE
+ALTER TABLE users
+ADD COLUMN photo VARCHAR(500) DEFAULT 'https://th.bing.com/th/id/OIP.nbiEEr9fr4P-UslubiE1RQHaHa?w=186&h=187&c=7&r=0&o=5&pid=1.7',
+ADD COLUMN description TEXT DEFAULT 'No description';
+
+
+ALTER TABLE users
+ADD COLUMN address VARCHAR(255) DEFAULT 'Skhirat',
+ADD COLUMN phone VARCHAR(20) DEFAULT '06##########';
+
+
+ALTER TABLE users
+ADD COLUMN travailName VARCHAR(255) DEFAULT 'No travailName',
+ADD COLUMN travailAddress VARCHAR(255) DEFAULT 'No travailAddress',
+ADD COLUMN headerPhoto VARCHAR(500) DEFAULT 'https://th.bing.com/th/id/R.72ad85d65b52a367ebb66f5466a8556b?rik=zeV%2bJ7Kb7lCNyA&riu=http%3a%2f%2fweknowyourdreams.com%2fimages%2fgrey%2fgrey-04.jpg&ehk=VFVujJ1Q0KhthB4cdQnwgljyetXvMgjem2gxDcUmkhE%3d&risl=&pid=ImgRaw&r=0';
+

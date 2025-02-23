@@ -24,7 +24,6 @@ class User {
         $stmt=$pdo->prepare("SELECT * FROM users");
         $stmt->execute();
         $user =$stmt->fetch(PDO::FETCH_ASSOC);
-        var_dump($user);
         if ($user['email']==$email){
 
 return ;

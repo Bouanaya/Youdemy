@@ -57,37 +57,6 @@ class Crud
         return $stmt->execute($params);
     }
 
-
-    public static function  selectall() {
-            $conn = Database::connect();
-            $query = "SELECT 
-    c.courseId,
-    c.title,
-    c.description,
-    c.content,
-    c.teacherId,
-    c.categoryId,
-    c.status,
-    c.price,
-    c.devise,
-    GROUP_CONCAT(DISTINCT t.tagName ORDER BY t.tagName SEPARATOR ', ') AS tags
-FROM 
-    Courses c
-LEFT JOIN 
-    CourseTags ct ON c.courseId = ct.courseId
-LEFT JOIN 
-    Tags t ON ct.tagId = t.tagId
-GROUP BY 
-    c.courseId
-ORDER BY 
-    c.created_at DESC";
-         
-            $stmt = $conn->prepare($query);
-            $stmt->execute();
-    
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-}
 }
 
 

@@ -32,7 +32,6 @@ $password = $_POST['password'];
 $email = $_POST['email'];
 $role = $_POST['role'];
 $slug = generateSlug($_POST['userName']);
-echo $slug;
 $user = new User();
 $user->register($userName, $email,$password,$role,$slug);
 header('Location: http://localhost/Youdemy/src/views/Auth/signIn.php');
